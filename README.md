@@ -10,7 +10,7 @@ Hacer el consentimiento a la comunidad y el mundo como cuidarse de manera saluda
  - Correo Electronico:23308060610140@cetis61.edu.mx
  - Especialidad:Programacion
  - Institucion:[Cetis61]
- - Fotografia
+ #### Fotografia
 <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/6d7414af-5461-4b88-980a-b269c5f60267" />
 
 
@@ -26,6 +26,6 @@ Hacer el consentimiento a la comunidad y el mundo como cuidarse de manera saluda
  - Correo Electronico:23308060610601@cetis61.edu.mx
  - Especialidad:Programacion
  - Institucion:[Cetis61]
- - Fotografia
+#### Fotografia
 <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/eafdf9a8-e6b2-4448-b98a-47164fe081a7" />
    
