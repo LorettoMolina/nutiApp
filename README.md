@@ -44,7 +44,7 @@ La metodología empleada se divide en dos partes:
 1. Análisis comparativo de tres aplicaciones existentes —**MyFitnessPal**, **Yazio** y **FatSecret**— mediante observación directa y revisión de sus funcionalidades.  
 2. Elaboración y aplicación de una encuesta digital mediante **Google Forms**, orientada a obtener información sobre los hábitos, preferencias y opiniones de los usuarios en relación con las apps de nutrición.
 
----
+
 
 ## 2. Análisis de Aplicaciones
 
@@ -80,7 +80,7 @@ La metodología empleada se divide en dos partes:
 | Yazio          | Freemium                      | Diseño atractivo, planes personalizados | Funciones avanzadas de pago       |
 | FatSecret      | Gratis / Premium sin anuncios | Comunidad activa, datos precisos         | Diseño menos moderno             |
 
----
+
 
 ## 3. Diseño y Resultados de Encuesta
 
@@ -104,7 +104,7 @@ Se diseñó una encuesta digital aplicada a **30 participantes** para conocer su
 14. ¿Tienes alguna condición de salud que influya en tu dieta o nutrición?  
 15. ¿Te gustaría recibir recomendaciones de nutrición en función de tu estilo de vida?  
 
----
+
 
 ## 4. Resultados y Análisis de Datos
 
@@ -138,7 +138,7 @@ La encuesta fue respondida por 30 personas. A continuación, los resultados más
 - El **75% ha usado alguna app**, aunque el **40% dejó de usarla**, principalmente por funciones bloqueadas o falta de personalización.  
 - La **mitad de los usuarios prefiere seguimiento visual mediante gráficos**, destacando la importancia de herramientas de progreso y recompensas.
 
----
+
 
 ## 5. Conclusiones y Oportunidades
 - Los usuarios valoran aplicaciones **simples, visualmente atractivas y personalizadas**, sin costos excesivos.  
@@ -147,7 +147,7 @@ La encuesta fue respondida por 30 personas. A continuación, los resultados más
   - Integración con dispositivos de salud (smartwatches, pulseras).  
   - Estrategias de **gamificación** para mantener el compromiso y la motivación.  
 
----
 
 
-****
+
+
