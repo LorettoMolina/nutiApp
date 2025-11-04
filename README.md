@@ -83,6 +83,7 @@ La metodología empleada se divide en dos partes:
 
 
 ## 3. Diseño y Resultados de Encuesta
+<img width="583" height="438" alt="Captura de pantalla 2025-11-04 111855" src="https://github.com/user-attachments/assets/dbce7da8-75ee-456a-8b49-7aebb300e87f" />
 
 
 ### 3.1 Diseño de la encuesta
