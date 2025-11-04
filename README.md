@@ -83,10 +83,10 @@ La metodología empleada se divide en dos partes:
 
 
 ## 3. Diseño y Resultados de Encuesta
-<img width="175" height="300" alt="Captura de pantalla 2025-11-04 113243" src="https://github.com/user-attachments/assets/36d9da04-ab38-40ef-a9ed-d33204b6d978" />
-<img width="175" height="300" alt="Captura de pantalla 2025-11-04 111855" src="https://github.com/user-attachments/assets/16a9b38b-0001-46ec-a3b7-9dd85ba1c75e" />
-<img width="175" height="300" alt="Captura de pantalla 2025-11-04 113422" src="https://github.com/user-attachments/assets/ba69d109-27fa-4b13-ada9-4a9192313f9c" />
-<img width="175" height="300" alt="Captura de pantalla 2025-11-04 113439" src="https://github.com/user-attachments/assets/d2a33e09-e50e-45b9-a87a-13cb5425a308" />
+<img width="346" height="278" alt="Captura de pantalla 2025-11-04 113243" src="https://github.com/user-attachments/assets/36d9da04-ab38-40ef-a9ed-d33204b6d978" />
+<img width="346" height="278" alt="Captura de pantalla 2025-11-04 111855" src="https://github.com/user-attachments/assets/16a9b38b-0001-46ec-a3b7-9dd85ba1c75e" />
+<img width="346" height="278" alt="Captura de pantalla 2025-11-04 113422" src="https://github.com/user-attachments/assets/ba69d109-27fa-4b13-ada9-4a9192313f9c" />
+<img width="346" height="278" alt="Captura de pantalla 2025-11-04 113439" src="https://github.com/user-attachments/assets/d2a33e09-e50e-45b9-a87a-13cb5425a308" />
 
 
 
