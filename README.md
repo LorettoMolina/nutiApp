@@ -84,6 +84,7 @@ La metodología empleada se divide en dos partes:
 
 ## 3. Diseño y Resultados de Encuesta
 
+
 ### 3.1 Diseño de la encuesta
 Se diseñó una encuesta digital aplicada a **30 participantes** para conocer sus intereses, hábitos y expectativas sobre aplicaciones de nutrición. Se utilizaron preguntas **cerradas y abiertas**, que permiten tanto el análisis cuantitativo como cualitativo.
 
