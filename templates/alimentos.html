@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<h2 class="text-center text-success mb-4">Lista de alimentos saludables</h2>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/frutas.jpg') }}" class="card-img-top" alt="Frutas">
+            <div class="card-body">
+                <h5 class="card-title">Frutas</h5>
+                <p class="card-text">Fuente natural de vitaminas, fibra y antioxidantes. Ideales para mantener energía y vitalidad.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/vegetales.jpg') }}" class="card-img-top" alt="Vegetales">
+            <div class="card-body">
+                <h5 class="card-title">Vegetales</h5>
+                <p class="card-text">Ricos en nutrientes y bajos en calorías. Son esenciales para una dieta equilibrada y saludable.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/proteinas.jpg') }}" class="card-img-top" alt="Proteínas">
+            <div class="card-body">
+                <h5 class="card-title">Proteínas</h5>
+                <p class="card-text">Ayudan al desarrollo y reparación de tejidos. Incluye carnes magras, legumbres y huevos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

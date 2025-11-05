@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="text-center">
+    <h2 class="text-success mb-3">Acerca de NutriVida</h2>
+    <p class="lead">NutriVida es una aplicación educativa que busca promover buenos hábitos alimenticios y un estilo de vida saludable.</p>
+    <p>Desarrollada por <strong>Molina y Avila</strong> como proyecto académico en 2025.</p>
+    <img src="{{ url_for('static', filename='img/vegetales.jpg') }}" class="img-fluid rounded shadow-sm mt-4" style="max-width:600px;">
+</div>
+{% endblock %}
