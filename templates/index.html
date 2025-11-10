@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block contenido %}
 <div class="text-center mb-5">
     <h1 class="text-success mb-4">Bienvenido a <strong>NutriVida</strong></h1>
@@ -8,7 +7,6 @@
         hábitos alimenticios, y consejos para mantener una dieta equilibrada.
     </p>
 </div>
-
 
 <div class="row text-center">
     <div class="col-md-4 mb-4">
@@ -31,6 +29,6 @@
 </div>
 
 <div class="text-center mt-5">
-    <a href="/alimentos" class="btn btn-success btn-lg">Explorar alimentos saludables</a>
+    <a href="{{ url_for('alimentos') }}" class="btn btn-success btn-lg me-2">Explorar alimentos saludables</a>
 </div>
 {% endblock %}

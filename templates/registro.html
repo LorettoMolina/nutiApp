@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+<h2 class="text-center text-success mb-4">Registro de Usuario</h2>
+
+<form method="POST" class="row g-3">
+
+  <div class="col-md-6">
+    <label class="form-label">Nombre</label>
+    <input type="text" name="nombre" class="form-control" required>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Apellidos</label>
+    <input type="text" name="apellidos" class="form-control">
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Edad</label>
+    <input type="number" name="edad" class="form-control">
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Sexo</label>
+    <select name="sexo" class="form-select">
+      <option>Masculino</option>
+      <option>Femenino</option>
+      <option>Otro</option>
+    </select>
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Nivel de Actividad</label>
+    <select name="actividad" class="form-select">
+      <option>Sedentario</option>
+      <option>Ligero</option>
+      <option>Moderado</option>
+      <option>Activo</option>
+      <option>Muy activo</option>
+    </select>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Peso (kg)</label>
+    <input type="number" name="peso" class="form-control">
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Altura (cm)</label>
+    <input type="number" name="altura" class="form-control">
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Objetivo</label>
+    <select name="objetivo" class="form-select">
+      <option>Bajar de peso</option>
+      <option>Aumentar masa muscular</option>
+      <option>Mantener peso</option>
+      <option>Mejorar digestión</option>
+      <option>Controlar condición (diabetes, hipertensión, etc.)</option>
+    </select>
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Alergias</label><br>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="alergias" value="Maní">
+      <label class="form-check-label">Maní</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="alergias" value="Mariscos">
+      <label class="form-check-label">Mariscos</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="alergias" value="Lactosa">
+      <label class="form-check-label">Lactosa</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="alergias" value="Ninguna">
+      <label class="form-check-label">Ninguna</label>
+    </div>
+</div>
+
+
+  <div class="col-12">
+    <label class="form-label">Tipo de Dieta</label>
+    <select name="dieta" class="form-select">
+      <option>Ninguna</option>
+      <option>Vegana</option>
+      <option>Vegetariana</option>
+      <option>Keto</option>
+      <option>Mediterránea</option>
+    </select>
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Nivel de Experiencia en Cocina</label>
+    <select name="experiencia" class="form-select">
+      <option>Principiante</option>
+      <option>Intermedio</option>
+      <option>Chef aficionado</option>
+    </select>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Correo Electrónico</label>
+    <input type="email" name="email" class="form-control" required>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Contraseña</label>
+    <input type="password" name="password" class="form-control" required>
+  </div>
+
+  <div class="col-12 text-center mt-4">
+    <button type="submit" class="btn btn-success btn-lg">Registrarme</button>
+  </div>
+</form>
+
+{% endblock %}

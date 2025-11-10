@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+<h2 class="text-center text-success mb-4">Perfil de {{ usuario.nombre }}</h2>
+
+<ul class="list-group">
+  <li class="list-group-item"><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellidos }}</li>
+  <li class="list-group-item"><strong>Edad:</strong> {{ usuario.edad }}</li>
+  <li class="list-group-item"><strong>Sexo:</strong> {{ usuario.sexo }}</li>
+  <li class="list-group-item"><strong>Peso:</strong> {{ usuario.peso }} kg</li>
+  <li class="list-group-item"><strong>Altura:</strong> {{ usuario.altura }} cm</li>
+  <li class="list-group-item"><strong>Actividad:</strong> {{ usuario.actividad }}</li>
+  <li class="list-group-item"><strong>Objetivo:</strong> {{ usuario.objetivo }}</li>
+  <li class="list-group-item"><strong>Dieta:</strong> {{ usuario.dieta }}</li>
+  <li class="list-group-item"><strong>Alergias:</strong> {{ usuario.alergias | join(', ') }}</li>
+  <li class="list-group-item"><strong>Experiencia:</strong> {{ usuario.experiencia }}</li>
+  <li class="list-group-item"><strong>Email:</strong> {{ usuario.email }}</li>
+</ul>
+
+<div class="text-center mt-4">
+  <a href="{{ url_for('logout') }}" class="btn btn-danger">Cerrar sesión</a>
+</div>
+
+{% endblock %}

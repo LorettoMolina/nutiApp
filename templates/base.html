@@ -6,50 +6,46 @@
     <title>NutriVida - Aplicación Nutricional</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
-
-<body class="bg-light">
-
+<body class="bg-light d-flex flex-column min-vh-100">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="/"> NutriVida</a>
+        <a class="navbar-brand fw-bold" href="{{ url_for('inicio') }}">NutriVida</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="menu">
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('inicio') }}">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('alimentos') }}">Alimentos</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('acerca') }}">Acerca de</a></li>
 
-                <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-
-                
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="calculadorasMenu" role="button" data-bs-toggle="dropdown">
-                        Calculadoras
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="calculadorasMenu">
-                        <li><a class="dropdown-item" href="/imc">Índice de Masa Corporal (IMC)</a></li>
-                        <li><a class="dropdown-item" href="/tmb">Tasa Metabólica Basal (TMB)</a></li>
-                        <li><a class="dropdown-item" href="/gct">Gasto Calórico Total (GCT)</a></li>
-                        <li><a class="dropdown-item" href="/pesoideal">Peso Corporal Ideal</a></li>
-                        <li><a class="dropdown-item" href="/macronutrientes">Macronutrientes</a></li>
-                    </ul>
-                </li>
-
-                
-                <li class="nav-item"><a class="nav-link" href="/analizador">Analizador de Recetas</a></li>
-
-                <li class="nav-item"><a class="nav-link" href="/acerca">Acerca de</a></li>
+                {% if session.get('usuario') %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('perfil') }}">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link btn btn-outline ms-3" href="{{ url_for('registro') }}">Registrarme</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 
-
 <div class="container my-5 p-4 bg-white rounded shadow">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
     {% block contenido %}{% endblock %}
 </div>
-
 
 <footer class="text-center text-white bg-success py-3 mt-auto">
      2025 NutriVida | Cálculos y Análisis Nutricional
