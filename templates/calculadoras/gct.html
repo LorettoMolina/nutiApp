@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+{% set titulo = "Gasto Calórico Total (GCT)" %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-lg">
+            <div class="card-body">
+
+                <h3 class="text-center text-success mb-4">{{ titulo }}</h3>
+
+                <form method="POST">
+                    <div class="mb-3">
+                        <label>TMB (kcal)</label>
+                        <input type="number" class="form-control" name="tmb" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Nivel de actividad</label>
+                        <select name="actividad" class="form-select">
+                            <option value="1.2">Sedentario</option>
+                            <option value="1.375">Ligero</option>
+                            <option value="1.55">Moderado</option>
+                            <option value="1.725">Activo</option>
+                            <option value="1.9">Muy activo</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-success w-100">Calcular</button>
+                </form>
+
+                {% if resultado %}
+                <div class="mt-4 p-3 rounded bg-info text-white text-center">
+                    <h4>Tu GCT es: <strong>{{ resultado }} kcal/día</strong></h4>
+                    <h5>{{ mensaje }}</h5>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+{% set titulo = "Peso Ideal" %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-lg">
+            <div class="card-body">
+
+                <h3 class="text-center text-success mb-4">{{ titulo }}</h3>
+
+                <form method="POST">
+
+                    <div class="mb-3">
+                        <label>Sexo</label>
+                        <select name="sexo" class="form-select">
+                            <option value="hombre">Hombre</option>
+                            <option value="mujer">Mujer</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Altura (cm)</label>
+                        <input type="number" name="altura" class="form-control" required>
+                    </div>
+
+                    <button class="btn btn-success w-100">Calcular</button>
+
+                </form>
+
+                {% if resultado %}
+                <div class="mt-4 p-3 rounded
+                    {% if estado == 'bajo' %} bg-warning
+                    {% elif estado == 'normal' %} bg-success text-white
+                    {% elif estado == 'alto' %} bg-danger text-white
+                    {% else %} bg-secondary text-white
+                    {% endif %}
+                ">
+                    <h4 class="text-center">Tu peso ideal es: <strong>{{ resultado }} kg</strong></h4>
+                    <h5 class="text-center">{{ mensaje }}</h5>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
