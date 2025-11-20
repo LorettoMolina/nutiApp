@@ -73,8 +73,7 @@ def alimentos():
 def acerca():
     return render_template('acerca.html')
 
-
-@app.route('/calculadora/imc', methods=['GET', 'POST'])
+@app.route('/calc_imc', methods=['GET', 'POST'])
 def calc_imc():
     resultado = None
     estado = None
@@ -99,10 +98,10 @@ def calc_imc():
             estado = "obesidad"
             mensaje = "Tu IMC indica obesidad."
 
-    return render_template('calculadoras/imc.html', resultado=resultado, estado=estado, mensaje=mensaje)
+    return render_template('calc_imc.html', resultado=resultado, estado=estado, mensaje=mensaje)
 
 
-@app.route('/calculadora/tmb', methods=['GET', 'POST'])
+@app.route('/calc_tmb', methods=['GET', 'POST'])
 def calc_tmb():
     resultado = None
     estado = None
@@ -121,7 +120,6 @@ def calc_tmb():
 
         resultado = round(tmb, 2)
 
-        # Mensajes basados en rango arbitrario (puedes ajustar)
         if resultado < 1200:
             estado = "bajo"
             mensaje = "Tu tasa metabólica basal es baja."
@@ -132,10 +130,10 @@ def calc_tmb():
             estado = "alto"
             mensaje = "Tu tasa metabólica basal es alta."
 
-    return render_template('calculadoras/tmb.html', resultado=resultado, estado=estado, mensaje=mensaje)
+    return render_template('calc_tmb.html', resultado=resultado, estado=estado, mensaje=mensaje)
 
 
-@app.route('/calculadora/gct', methods=['GET', 'POST'])
+@app.route('/calc_gct', methods=['GET', 'POST'])
 def calc_gct():
     resultado = None
     estado = None
@@ -167,10 +165,10 @@ def calc_gct():
             estado = "alto"
             mensaje = "Gasto calórico total alto."
 
-    return render_template('calculadoras/gct.html', resultado=resultado, estado=estado, mensaje=mensaje)
+    return render_template('calc_gct.html', resultado=resultado, estado=estado, mensaje=mensaje)
 
 
-@app.route('/calculadora/peso_ideal', methods=['GET', 'POST'])
+@app.route('/calc_peso_ideal', methods=['GET', 'POST'])
 def calc_peso_ideal():
     resultado = None
     estado = None
@@ -189,10 +187,10 @@ def calc_peso_ideal():
         mensaje = f"Tu peso corporal ideal estimado es {resultado} kg."
         estado = "normal"
 
-    return render_template('calculadoras/peso_ideal.html', resultado=resultado, estado=estado, mensaje=mensaje)
+    return render_template('calc_peso_ideal.html', resultado=resultado, estado=estado, mensaje=mensaje)
 
 
-@app.route('/calculadora/macronutrientes', methods=['GET', 'POST'])
+@app.route('/calc_macros', methods=['GET', 'POST'])
 def calc_macros():
     resultado = None
     estado = None
@@ -200,9 +198,9 @@ def calc_macros():
 
     if request.method == 'POST':
         calorias = float(request.form['calorias'])
-        proteinas = round(calorias * 0.3 / 4, 2)    # 30% proteínas, 4 cal/g
-        grasas = round(calorias * 0.25 / 9, 2)      # 25% grasas, 9 cal/g
-        carbohidratos = round(calorias * 0.45 / 4, 2) # 45% carbs, 4 cal/g
+        proteinas = round(calorias * 0.3 / 4, 2)
+        grasas = round(calorias * 0.25 / 9, 2)
+        carbohidratos = round(calorias * 0.45 / 4, 2)
 
         resultado = {
             "proteinas": proteinas,
@@ -213,7 +211,53 @@ def calc_macros():
         mensaje = "Distribución recomendada de macronutrientes."
         estado = "normal"
 
-    return render_template('calculadoras/macronutrientes.html', resultado=resultado, estado=estado, mensaje=mensaje)
+    return render_template('calc_macros.html', resultado=resultado, estado=estado, mensaje=mensaje)
+
+
+@app.route('/recetas', methods=['GET', 'POST'])
+def recetas():
+    resultado = None
+    mensaje = ""
+
+    if request.method == 'POST':
+        receta = request.form['receta']
+        porciones = int(request.form['porciones'])
+
+        
+        calorias_totales = 0
+        lineas = receta.split("\n")
+
+        tabla_calorias = {
+            "pollo": 165,
+            "arroz": 130,
+            "huevo": 70,
+            "manzana": 52,
+            "platano": 89,
+            "leche": 60,
+            "atun": 116,
+            "pasta": 131,
+            "pan": 265,
+            "avena": 389
+        }
+
+        for linea in lineas:
+            for alimento, kcal in tabla_calorias.items():
+                if alimento in linea.lower():
+                    calorias_totales += kcal
+
+        if calorias_totales == 0:
+            mensaje = "No se reconocieron ingredientes. Intenta escribir ingredientes simples."
+        else:
+            calorias_porcion = round(calorias_totales / porciones, 2)
+
+            resultado = {
+                "total": calorias_totales,
+                "porcion": calorias_porcion
+            }
+
+            mensaje = "Cálculo estimado basado en ingredientes detectados."
+
+    return render_template('recetas.html', resultado=resultado, mensaje=mensaje)
 
 
 if __name__ == '__main__':

@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NutriVida - Aplicación Nutricional</title>
 
-    <!-- BOOTSTRAP 5 -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
 
-<!-- NAVBAR -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold" href="{{ url_for('inicio') }}">NutriVida</a>
@@ -35,7 +35,13 @@
                     <a class="nav-link" href="{{ url_for('acerca') }}">Acerca de</a>
                 </li>
 
-                <!-- MENÚ DESPLEGABLE CALCULADORAS -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('recetas') }}">Analizador Recetas</a>
+                </li>
+
+                
+
+                
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         Calculadoras
@@ -44,11 +50,15 @@
                         <li><a class="dropdown-item" href="{{ url_for('calc_imc') }}">IMC</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('calc_tmb') }}">TMB</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('calc_gct') }}">Gasto Calórico Total</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('calc_ideal') }}">Peso Ideal</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('calc_peso_ideal') }}">Peso Ideal</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('calc_macros') }}">Macronutrientes</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('analizar_receta') }}">Analizador de Recetas</a></li>
+                        
+
                     </ul>
+                    
+                       
                 </li>
+                
 
                 {% if session.get('usuario') %}
                     <li class="nav-item">
@@ -68,10 +78,10 @@
     </div>
 </nav>
 
-<!-- CONTENIDO -->
+
 <div class="container my-5 p-4 bg-white rounded shadow-lg">
 
-    <!-- ALERTAS -->
+    
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
@@ -88,13 +98,14 @@
 
 </div>
 
-<!-- FOOTER -->
+
 <footer class="text-center text-white bg-success py-3 mt-auto shadow-sm">
     © 2025 NutriVida | Cálculos y Análisis Nutricional
 </footer>
 
-<!-- BOOTSTRAP SCRIPT -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
 
 </body>
 </html>

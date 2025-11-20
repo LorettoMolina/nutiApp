@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<h2 class="text-success text-center mb-4">Analizador de Recetas</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Ingredientes (uno por línea):</label>
+        <textarea name="receta" class="form-control" rows="6" placeholder="Ejemplo:
+1 taza de arroz
+150g de pollo
+1 huevo" required></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Porciones:</label>
+        <input type="number" name="porciones" class="form-control" min="1" required>
+    </div>
+
+    <button class="btn btn-success w-100">Analizar Receta</button>
+</form>
+
+{% if resultado %}
+<div class="mt-4 p-4 bg-light border rounded">
+    <h4 class="text-center text-success">Resultados</h4>
+
+    <p><strong>Calorías Totales:</strong> {{ resultado.total }} kcal</p>
+    <p><strong>Calorías por porción:</strong> {{ resultado.porcion }} kcal</p>
+
+    <p class="text-muted">{{ mensaje }}</p>
+</div>
+{% endif %}
+
+{% endblock %}
