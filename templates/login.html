@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<h2 class="text-center mb-4">Iniciar sesión</h2>
+
+<form method="POST" class="mx-auto" style="max-width: 400px;">
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input type="email" class="form-control" name="email" required>
+    </div>
+
+    <div class="mb-3">
+        <label>Contraseña</label>
+        <input type="password" class="form-control" name="password" required>
+    </div>
+
+    <button class="btn btn-success w-100">Entrar</button>
+
+</form>
+{% endblock %}

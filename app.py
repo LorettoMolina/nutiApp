@@ -5,9 +5,23 @@ app.secret_key = "clave_super_secreta_nutrivida"
 
 usuarios = {}
 
+
+def login_requerido(func):
+    def wrapper(*args, **kwargs):
+        if 'usuario' not in session:
+            flash("Debes iniciar sesión para acceder.", "warning")
+            return redirect(url_for('login'))
+        return func(*args, **kwargs)
+    wrapper.__name__ = func.__name__
+    return wrapper
+
+
+
 @app.route('/')
 def inicio():
     return render_template('index.html')
+
+
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -51,29 +65,55 @@ def registro():
 
     return render_template('registro.html')
 
-@app.route('/perfil')
-def perfil():
-    if 'usuario' not in session:
-        return redirect(url_for('registro'))
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form.get('email').lower()
+        password = request.form.get('password')
+
+        if email not in usuarios:
+            flash("Este correo no está registrado.", "danger")
+            return redirect(url_for('login'))
+
+        if usuarios[email]["password"] != password:
+            flash("Contraseña incorrecta.", "danger")
+            return redirect(url_for('login'))
+
+        session['usuario'] = email
+        flash("Inicio de sesión exitoso.", "success")
+        return redirect(url_for('inicio'))
+
+    return render_template('login.html')
+
+
+@app.route('/perfil')
+@login_requerido
+def perfil():
     email = session['usuario']
     usuario = usuarios.get(email)
     return render_template('perfil.html', usuario=usuario)
+
 
 @app.route('/logout')
 def logout():
     session.pop('usuario', None)
     return redirect(url_for('inicio'))
 
+
 @app.route('/alimentos')
 def alimentos():
     return render_template('alimentos.html')
+
 
 @app.route('/acerca')
 def acerca():
     return render_template('acerca.html')
 
+
 @app.route('/calc_imc', methods=['GET', 'POST'])
+@login_requerido
 def calc_imc():
     resultado = None
     estado = None
@@ -102,6 +142,7 @@ def calc_imc():
 
 
 @app.route('/calc_tmb', methods=['GET', 'POST'])
+@login_requerido
 def calc_tmb():
     resultado = None
     estado = None
@@ -122,18 +163,19 @@ def calc_tmb():
 
         if resultado < 1200:
             estado = "bajo"
-            mensaje = "Tu tasa metabólica basal es baja."
+            mensaje = "Tu TMB es baja."
         elif 1200 <= resultado <= 1800:
             estado = "normal"
-            mensaje = "Tu tasa metabólica basal está en rango normal."
+            mensaje = "Tu TMB es normal."
         else:
             estado = "alto"
-            mensaje = "Tu tasa metabólica basal es alta."
+            mensaje = "Tu TMB es alta."
 
     return render_template('calc_tmb.html', resultado=resultado, estado=estado, mensaje=mensaje)
 
 
 @app.route('/calc_gct', methods=['GET', 'POST'])
+@login_requerido
 def calc_gct():
     resultado = None
     estado = None
@@ -157,18 +199,19 @@ def calc_gct():
 
         if gct < 1800:
             estado = "bajo"
-            mensaje = "Gasto calórico total bajo."
+            mensaje = "GCT bajo."
         elif 1800 <= gct <= 2800:
             estado = "normal"
-            mensaje = "Gasto calórico total en rango saludable."
+            mensaje = "GCT normal."
         else:
             estado = "alto"
-            mensaje = "Gasto calórico total alto."
+            mensaje = "GCT alto."
 
     return render_template('calc_gct.html', resultado=resultado, estado=estado, mensaje=mensaje)
 
 
 @app.route('/calc_peso_ideal', methods=['GET', 'POST'])
+@login_requerido
 def calc_peso_ideal():
     resultado = None
     estado = None
@@ -178,19 +221,17 @@ def calc_peso_ideal():
         altura = float(request.form['altura']) / 100
         sexo = request.form['sexo']
 
-        if sexo == "masculino":
-            peso_ideal = 22 * (altura ** 2)
-        else:
-            peso_ideal = 21 * (altura ** 2)
+        peso_ideal = 22 * (altura ** 2) if sexo == "masculino" else 21 * (altura ** 2)
 
         resultado = round(peso_ideal, 2)
-        mensaje = f"Tu peso corporal ideal estimado es {resultado} kg."
+        mensaje = f"Tu peso ideal es {resultado} kg."
         estado = "normal"
 
     return render_template('calc_peso_ideal.html', resultado=resultado, estado=estado, mensaje=mensaje)
 
 
 @app.route('/calc_macros', methods=['GET', 'POST'])
+@login_requerido
 def calc_macros():
     resultado = None
     estado = None
@@ -208,13 +249,15 @@ def calc_macros():
             "carbohidratos": carbohidratos
         }
 
-        mensaje = "Distribución recomendada de macronutrientes."
+        mensaje = "Distribución recomendada."
         estado = "normal"
 
     return render_template('calc_macros.html', resultado=resultado, estado=estado, mensaje=mensaje)
 
 
+
 @app.route('/recetas', methods=['GET', 'POST'])
+@login_requerido
 def recetas():
     resultado = None
     mensaje = ""
@@ -223,7 +266,6 @@ def recetas():
         receta = request.form['receta']
         porciones = int(request.form['porciones'])
 
-        
         calorias_totales = 0
         lineas = receta.split("\n")
 
@@ -246,16 +288,11 @@ def recetas():
                     calorias_totales += kcal
 
         if calorias_totales == 0:
-            mensaje = "No se reconocieron ingredientes. Intenta escribir ingredientes simples."
+            mensaje = "No se reconocieron ingredientes."
         else:
             calorias_porcion = round(calorias_totales / porciones, 2)
-
-            resultado = {
-                "total": calorias_totales,
-                "porcion": calorias_porcion
-            }
-
-            mensaje = "Cálculo estimado basado en ingredientes detectados."
+            resultado = {"total": calorias_totales, "porcion": calorias_porcion}
+            mensaje = "Cálculo estimado correctamente."
 
     return render_template('recetas.html', resultado=resultado, mensaje=mensaje)
 
