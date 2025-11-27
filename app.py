@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
+import requests
 
 app = Flask(__name__)
 app.secret_key = "clave_super_secreta_nutrivida"
-
+API_KEY = "6a7697ebd97f47709ec251c5b6a12c96"
 usuarios = {}
 
 
@@ -16,11 +17,9 @@ def login_requerido(func):
     return wrapper
 
 
-
 @app.route('/')
 def inicio():
     return render_template('index.html')
-
 
 
 @app.route('/registro', methods=['GET', 'POST'])
@@ -64,7 +63,6 @@ def registro():
         return redirect(url_for('perfil'))
 
     return render_template('registro.html')
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -256,45 +254,78 @@ def calc_macros():
 
 
 
-@app.route('/recetas', methods=['GET', 'POST'])
-@login_requerido
+@app.route("/recetas", methods=["GET", "POST"])
 def recetas():
     resultado = None
     mensaje = ""
 
-    if request.method == 'POST':
-        receta = request.form['receta']
-        porciones = int(request.form['porciones'])
+    if request.method == "POST":
+        texto = request.form["receta"]
+        ingredientes = texto.strip().split("\n")
 
-        calorias_totales = 0
-        lineas = receta.split("\n")
+        API_KEY = "6a7697ebd97f47709ec251c5b6a12c96"
 
-        tabla_calorias = {
-            "pollo": 165,
-            "arroz": 130,
-            "huevo": 70,
-            "manzana": 52,
-            "platano": 89,
-            "leche": 60,
-            "atun": 116,
-            "pasta": 131,
-            "pan": 265,
-            "avena": 389
+        total_cal = 0
+        total_prot = 0
+        total_fat = 0
+        total_carb = 0
+        detalle = []
+
+        for ing in ingredientes:
+           
+            search_url = "https://api.spoonacular.com/food/ingredients/search"
+            params = {"query": ing, "apiKey": API_KEY}
+
+            search_res = requests.get(search_url, params=params).json()
+
+            if not search_res.get("results"):
+                mensaje = f"No pude reconocer: {ing}"
+                continue
+
+            ingredient_id = search_res["results"][0]["id"]
+
+           
+            info_url = f"https://api.spoonacular.com/food/ingredients/{ingredient_id}/information"
+            params = {"amount": 1, "apiKey": API_KEY}
+
+            info_res = requests.get(info_url, params=params).json()
+
+            nutri = info_res.get("nutrition", {}).get("nutrients", [])
+
+            def get(n):
+                for x in nutri:
+                    if x["name"] == n:
+                        return x["amount"]
+                return 0
+
+            cal = get("Calories")
+            prot = get("Protein")
+            fat = get("Fat")
+            carb = get("Carbohydrates")
+
+            total_cal += cal
+            total_prot += prot
+            total_fat += fat
+            total_carb += carb
+
+            detalle.append({
+                "ingrediente": info_res.get("name", ing),
+                "calorias": cal,
+                "proteina": prot,
+                "grasa": fat,
+                "carbohidratos": carb
+            })
+
+        resultado = {
+            "total": round(total_cal, 1),
+            "prot": round(total_prot, 1),
+            "fat": round(total_fat, 1),
+            "carb": round(total_carb, 1),
+            "detallado": detalle
         }
 
-        for linea in lineas:
-            for alimento, kcal in tabla_calorias.items():
-                if alimento in linea.lower():
-                    calorias_totales += kcal
+    return render_template("recetas.html", resultado=resultado, mensaje=mensaje)
 
-        if calorias_totales == 0:
-            mensaje = "No se reconocieron ingredientes."
-        else:
-            calorias_porcion = round(calorias_totales / porciones, 2)
-            resultado = {"total": calorias_totales, "porcion": calorias_porcion}
-            mensaje = "Cálculo estimado correctamente."
-
-    return render_template('recetas.html', resultado=resultado, mensaje=mensaje)
 
 
 if __name__ == '__main__':

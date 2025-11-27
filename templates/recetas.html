@@ -13,11 +13,6 @@
 1 huevo" required></textarea>
     </div>
 
-    <div class="mb-3">
-        <label class="form-label">Porciones:</label>
-        <input type="number" name="porciones" class="form-control" min="1" required>
-    </div>
-
     <button class="btn btn-success w-100">Analizar Receta</button>
 </form>
 
@@ -26,9 +21,29 @@
     <h4 class="text-center text-success">Resultados</h4>
 
     <p><strong>Calorías Totales:</strong> {{ resultado.total }} kcal</p>
-    <p><strong>Calorías por porción:</strong> {{ resultado.porcion }} kcal</p>
+
+    <p><strong>Proteína total:</strong> {{ resultado.prot }} g</p>
+    <p><strong>Grasa total:</strong> {{ resultado.fat }} g</p>
+    <p><strong>Carbohidratos totales:</strong> {{ resultado.carb }} g</p>
 
     <p class="text-muted">{{ mensaje }}</p>
+
+    <hr>
+
+    <h5 class="mt-4">Detalle por ingrediente</h5>
+    <ul>
+        {% for item in resultado.detallado %}
+        <li>
+            <strong>{{ item.ingrediente }}</strong><br>
+            {{ item.calorias }} kcal —
+            {{ item.proteina }} g proteína —
+            {{ item.grasa }} g grasa —
+            {{ item.carbohidratos }} g carbohidratos
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+
 </div>
 {% endif %}
 
