@@ -1,10 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import requests
-
+import pymysql
 app = Flask(__name__)
 app.secret_key = "clave_super_secreta_nutrivida"
 API_KEY = "6a7697ebd97f47709ec251c5b6a12c96"
 usuarios = {}
+
+
+
+conexion = pymysql.connect(
+    host="localhost",
+    user="root",         
+    password="",         
+    database="nutrivida",   
+    cursorclass=pymysql.cursors.DictCursor
+)
 
 
 def login_requerido(func):
@@ -22,6 +32,8 @@ def inicio():
     return render_template('index.html')
 
 
+
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     if request.method == 'POST':
@@ -35,32 +47,41 @@ def registro():
         objetivo = request.form.get('objetivo')
         email = request.form.get('email').lower()
         password = request.form.get('password')
-        alergias = request.form.getlist('alergias')
+        alergias = ", ".join(request.form.getlist('alergias'))
         dieta = request.form.get('dieta')
         experiencia = request.form.get('experiencia')
 
-        if email in usuarios:
-            flash("Este correo ya está registrado.", "danger")
-            return redirect(url_for('registro'))
+        try:
+            
+            with conexion.cursor() as cursor:
+                cursor.execute("SELECT id FROM usuarios WHERE email=%s", (email,))
+                existente = cursor.fetchone()
 
-        usuarios[email] = {
-            "nombre": nombre,
-            "apellidos": apellidos,
-            "edad": edad,
-            "sexo": sexo,
-            "peso": peso,
-            "altura": altura,
-            "actividad": actividad,
-            "objetivo": objetivo,
-            "email": email,
-            "password": password,
-            "alergias": alergias,
-            "dieta": dieta,
-            "experiencia": experiencia
-        }
+                if existente:
+                    flash("Este correo ya está registrado.", "danger")
+                    return redirect(url_for('registro'))
 
-        session['usuario'] = email
-        return redirect(url_for('perfil'))
+            
+            with conexion.cursor() as cursor:
+                sql = """
+                    INSERT INTO usuarios
+                    (nombre, apellidos, edad, sexo, peso, altura, actividad, objetivo,
+                     alergias, dieta, experiencia, email, password)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (
+                    nombre, apellidos, edad, sexo, peso, altura, actividad,
+                    objetivo, alergias, dieta, experiencia, email, password
+                ))
+                conexion.commit()
+
+            
+            session['usuario'] = email
+            return redirect(url_for('perfil'))
+
+        except Exception as e:
+            print("ERROR REGISTRO:", e)
+            flash("Hubo un error al registrar.", "danger")
 
     return render_template('registro.html')
 
@@ -71,17 +92,30 @@ def login():
         email = request.form.get('email').lower()
         password = request.form.get('password')
 
-        if email not in usuarios:
+        conexion = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='nutrivida',
+            cursorclass=pymysql.cursors.DictCursor
+        )
+
+        with conexion:
+            with conexion.cursor() as cursor:
+                sql = "SELECT * FROM usuarios WHERE email=%s LIMIT 1"
+                cursor.execute(sql, (email,))
+                usuario = cursor.fetchone()
+
+        if not usuario:
             flash("Este correo no está registrado.", "danger")
             return redirect(url_for('login'))
 
-        if usuarios[email]["password"] != password:
-            flash("Contraseña incorrecta.", "danger")
+        if usuario['password'] != password:
+            flash("La contraseña es incorrecta.", "danger")
             return redirect(url_for('login'))
 
-        session['usuario'] = email
-        flash("Inicio de sesión exitoso.", "success")
-        return redirect(url_for('inicio'))
+        session['usuario'] = usuario['email']
+        return redirect(url_for('perfil'))
 
     return render_template('login.html')
 
@@ -100,6 +134,7 @@ def logout():
     return redirect(url_for('inicio'))
 
 
+
 @app.route('/alimentos')
 def alimentos():
     return render_template('alimentos.html')
@@ -111,7 +146,7 @@ def acerca():
 
 
 @app.route('/calc_imc', methods=['GET', 'POST'])
-@login_requerido
+
 def calc_imc():
     resultado = None
     estado = None
@@ -140,7 +175,7 @@ def calc_imc():
 
 
 @app.route('/calc_tmb', methods=['GET', 'POST'])
-@login_requerido
+
 def calc_tmb():
     resultado = None
     estado = None
@@ -173,7 +208,7 @@ def calc_tmb():
 
 
 @app.route('/calc_gct', methods=['GET', 'POST'])
-@login_requerido
+
 def calc_gct():
     resultado = None
     estado = None
@@ -209,7 +244,7 @@ def calc_gct():
 
 
 @app.route('/calc_peso_ideal', methods=['GET', 'POST'])
-@login_requerido
+
 def calc_peso_ideal():
     resultado = None
     estado = None
