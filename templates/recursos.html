@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Recursos Descargables - NutriVida{% endblock %}
+
+{% block contenido %}
+<div class="container my-5">
+    <h2 class="text-center text-success mb-4">
+        Recursos Descargables
+    </h2>
+
+    <p class="text-center text-muted mb-5">
+        Aquí encontrarás herramientas y materiales que complementan tu bienestar y tus objetivos de nutrición.
+    </p>
+
+    <div class="row justify-content-center">
+        
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm border-success">
+                <div class="card-body text-center">
+                    <h4 class="text-success mb-3">Planillas de Ejercicios Básicos</h4>
+                    <p class="text-secondary">
+                        Complementa tu plan nutricional con rutinas simples y efectivas para mantenerte activo.
+                    </p>
+                    <a href="{{ url_for('static', filename='recursos/planilla_ejercicios.pdf') }}" 
+                       class="btn btn-success px-4" download>
+                        Descargar PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
